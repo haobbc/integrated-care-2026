@@ -187,6 +187,36 @@
   line-height: 1.4;
 }
 
+/* Multi-line topic→value rows (used by papers row) */
+.ps-cell__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ps-cell__line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-display-cn);
+  line-height: 1.35;
+}
+.ps-cell__line-topic {
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.ps-cell__line-value {
+  font-size: 17px;
+  color: var(--text);
+  font-feature-settings: "tnum";
+}
+.ps-cell--us .ps-cell__line-value {
+  color: var(--accent);
+  font-weight: 600;
+}
+
 /* Hero number block inside cell */
 .ps-cell--hero .ps-cell__num {
   display: flex;

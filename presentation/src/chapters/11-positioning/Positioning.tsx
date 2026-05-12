@@ -5,15 +5,19 @@ import "./Positioning.css";
    4-dimension × 4-column comparison rebuilt natively as a CSS grid table.
    Per-step: row highlights + per-row hero number callout. */
 
+type LineItem = { topic: string; value: string };
+
 type Cell = {
   /** Main text content (Chinese label) */
-  text: string;
+  text?: string;
   /** Optional accent number rendered as hero numeral */
   num?: string;
   /** Optional unit / suffix rendered next to the number */
   unit?: string;
   /** Optional secondary line (smaller, muted) */
   sub?: string;
+  /** Multi-line topic→value rows (used by papers row to list 3 sub-topics). */
+  lines?: LineItem[];
   /** Show a crown badge on this cell (leadership claim) */
   crown?: boolean;
 };
@@ -75,14 +79,30 @@ const ROWS: Row[] = [
     id: "papers",
     dim: "論文發表",
     us: {
-      text: "腦瘤",
-      num: "132",
-      unit: "篇",
-      sub: "清醒開顱 / 聚焦超音波 5 篇",
+      lines: [
+        { topic: "惡性腦瘤", value: "138 篇" },
+        { topic: "清醒開顱", value: "10 篇" },
+        { topic: "聚焦超音波", value: "28 篇" },
+      ],
     },
-    national: { text: "北京 25", sub: "清醒開顱 0 (北京)" },
-    asia: { text: "日本 122", sub: "韓國 208" },
-    west: { text: "美國 393 · 法國 / 英國 89", sub: "韓國 12" },
+    national: {
+      lines: [
+        { topic: "惡性腦瘤", value: "北榮 132 · 台大 25" },
+        { topic: "清醒開顱", value: "北榮 3 · 台大 0" },
+      ],
+    },
+    asia: {
+      lines: [
+        { topic: "惡性腦瘤", value: "日本 122 · 韓國 208" },
+        { topic: "清醒開顱", value: "日本 1 · 韓國 0" },
+      ],
+    },
+    west: {
+      lines: [
+        { topic: "惡性腦瘤", value: "美國 393 · 法國 184" },
+        { topic: "清醒開顱", value: "美國 9 · 法國 0" },
+      ],
+    },
     highlightStep: 4,
   },
 ];
@@ -189,7 +209,7 @@ function DataCell({
       }
     >
       {cell.crown && <Crown active={active} />}
-      <div className="ps-cell__text">{cell.text}</div>
+      {cell.text && <div className="ps-cell__text">{cell.text}</div>}
       {cell.num && (
         <div className="ps-cell__num">
           <span className="hero-num ps-num">{cell.num}</span>
@@ -197,6 +217,16 @@ function DataCell({
         </div>
       )}
       {cell.sub && <div className="ps-cell__sub">{cell.sub}</div>}
+      {cell.lines && (
+        <div className="ps-cell__lines">
+          {cell.lines.map((l) => (
+            <div className="ps-cell__line" key={l.topic}>
+              <span className="ps-cell__line-topic">{l.topic}</span>
+              <span className="ps-cell__line-value">{l.value}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
