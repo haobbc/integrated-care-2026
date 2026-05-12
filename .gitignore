@@ -20,3 +20,5 @@ presentation/.vite/
 # raw extraction artifacts
 extracted/
 source.pptx
+# LibreOffice lock files
+.~lock.*
