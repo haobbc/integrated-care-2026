@@ -132,8 +132,16 @@
   text-align: right;
 }
 
-/* ── Step 1 · chain ── */
+/* ── Step 0/1 · chain ── */
 .fs-stage--chain { justify-content: flex-start; }
+/* compact mode: chain shrinks to share the viewport with the timeline */
+.fs-stage--compact { gap: 14px; flex: 0 0 auto; }
+.fs-stage--compact .fs-node { min-height: 96px; padding: 10px 14px; }
+.fs-stage--compact .fs-node__tag { width: 40px; height: 40px; font-size: 22px; }
+.fs-stage--compact .fs-node__title { font-size: 18px; }
+.fs-stage--compact .fs-node__sub { font-size: 11px; }
+.fs-stage--compact .fs-node__note { font-size: 12px; margin-top: 4px; padding-top: 4px; }
+.fs-stage--compact .fs-stage__foot { display: none; }
 .fs-chain {
   display: flex;
   align-items: stretch;

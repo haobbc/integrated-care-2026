@@ -2,10 +2,10 @@ import type { ChapterStepProps } from "../../registry/types";
 import "./Fus.css";
 
 /* Chapter 5 — 特色進展 2 · 聚焦超音波臨床試驗團隊 (slide 6).
-   3 steps (intro hero removed per spec):
+   3 steps:
      0 — 學研醫創產 5-actor chain
-     1 — 4-quadrant application grid
-     2 — NaviFUS clinical-trial timeline 2014 → 2025
+     1 — chain stays, NaviFUS timeline drops in below it (extension)
+     2 — 4-quadrant application grid
 */
 
 export default function Fus({ step }: ChapterStepProps) {
@@ -14,9 +14,9 @@ export default function Fus({ step }: ChapterStepProps) {
       <Chip />
       <Hero />
 
-      {step === 0 && <ChainScene />}
-      {step === 1 && <GridScene />}
-      {step === 2 && <TimelineScene />}
+      {(step === 0 || step === 1) && <ChainScene compact={step === 1} />}
+      {step === 1 && <TimelineScene />}
+      {step === 2 && <GridScene />}
     </div>
   );
 }
@@ -43,8 +43,9 @@ function Hero() {
   );
 }
 
-/* ── Step 1: 學研醫創產 chain ── */
-function ChainScene() {
+/* ── Step 0/1: 學研醫創產 chain. In step 1 (with timeline appearing
+       below), the chain renders compact so both fit in the viewport. ── */
+function ChainScene({ compact = false }: { compact?: boolean }) {
   const nodes = [
     { tag: "醫", title: "神經外科", sub: "Neurosurgery", note: "臨床主導" },
     { tag: "研", title: "神經科學研究中心", sub: "Neuroscience Research Center", note: "轉譯研究" },
@@ -53,7 +54,7 @@ function ChainScene() {
     { tag: "產", title: "跨國臨床試驗", sub: "Clinical Trials", note: "臨床落地" },
   ];
   return (
-    <section className="fs-stage fs-stage--chain">
+    <section className={`fs-stage fs-stage--chain ${compact ? "fs-stage--compact" : ""}`}>
       <div className="fs-section-label">學研醫創產 全面整合</div>
       <div className="fs-chain">
         {nodes.map((n, i) => (
