@@ -55,18 +55,6 @@ export default function Collab({ step }: ChapterStepProps) {
         {/* ───────── LEFT · mind map ───────── */}
         <div className="cb-map">
           <MindMap step={step} />
-          {step === 1 && (
-            <div className="cb-badges">
-              <div className="cb-badge">
-                <span className="cb-badge__freq">Weekly</span>
-                <span className="cb-badge__label">跨科診療討論</span>
-              </div>
-              <div className="cb-badge">
-                <span className="cb-badge__freq">Monthly</span>
-                <span className="cb-badge__label">特殊個案病理討論</span>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* ───────── RIGHT · photo + step text ───────── */}
@@ -177,17 +165,24 @@ function MindMap({ step }: { step: number }) {
         className="cb-ring-outline"
       />
 
-      {/* radial spokes (lines from center to each node) */}
+      {/* radial spokes — stop ~8px before the node edge so the lit
+          stroke never grazes the node circle / label. */}
       {SPECS.map((s) => {
         const p = nodePos(s.angle);
         const lit = litIds.has(s.id);
+        const rad = (s.angle * Math.PI) / 180;
+        const trim = R_NODE + 8;
+        const startX = CX + R_CENTER * Math.cos(rad);
+        const startY = CY + R_CENTER * Math.sin(rad);
+        const endX = p.x - trim * Math.cos(rad);
+        const endY = p.y - trim * Math.sin(rad);
         return (
           <line
             key={`spoke-${s.id}`}
-            x1={CX}
-            y1={CY}
-            x2={p.x}
-            y2={p.y}
+            x1={startX}
+            y1={startY}
+            x2={endX}
+            y2={endY}
             className={`cb-spoke ${lit ? "cb-spoke--lit" : ""}`}
           />
         );
