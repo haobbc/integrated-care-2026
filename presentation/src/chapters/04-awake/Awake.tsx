@@ -78,12 +78,12 @@ export default function Awake({ step }: ChapterStepProps) {
           <div className="aw-core__streams">
             <div className="aw-core__stream">
               <div className="aw-core__stream-label">術中監測 A</div>
-              <div className="aw-core__stream-name">認知功能</div>
-              <div className="aw-core__stream-en">Cognitive Mapping</div>
+              <div className="aw-core__stream-name">運動功能</div>
+              <div className="aw-core__stream-en">Motor Mapping</div>
               <div className="aw-core__wave">
                 <svg viewBox="0 0 320 40" preserveAspectRatio="none">
                   <path
-                    d="M0 20 L40 20 L52 8 L68 32 L84 16 L100 24 L140 20 L156 6 L172 34 L188 18 L204 22 L240 20 L256 10 L272 30 L288 18 L320 20"
+                    d="M0 20 L24 20 L40 12 L58 28 L78 14 L96 26 L120 20 L140 8 L160 30 L180 16 L200 24 L228 20 L248 12 L268 28 L290 18 L320 20"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.4"
@@ -104,12 +104,12 @@ export default function Awake({ step }: ChapterStepProps) {
 
             <div className="aw-core__stream">
               <div className="aw-core__stream-label">術中監測 B</div>
-              <div className="aw-core__stream-name">運動功能</div>
-              <div className="aw-core__stream-en">Motor Mapping</div>
+              <div className="aw-core__stream-name">認知功能</div>
+              <div className="aw-core__stream-en">Cognitive Mapping</div>
               <div className="aw-core__wave">
                 <svg viewBox="0 0 320 40" preserveAspectRatio="none">
                   <path
-                    d="M0 20 L24 20 L40 12 L58 28 L78 14 L96 26 L120 20 L140 8 L160 30 L180 16 L200 24 L228 20 L248 12 L268 28 L290 18 L320 20"
+                    d="M0 20 L40 20 L52 8 L68 32 L84 16 L100 24 L140 20 L156 6 L172 34 L188 18 L204 22 L240 20 L256 10 L272 30 L288 18 L320 20"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.4"
