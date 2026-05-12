@@ -32,13 +32,14 @@ export default function App() {
 
   const { mode, cycleMode, autoStarted, setAutoStarted } = useAutoMode();
 
-  // Audio path follows the convention: /audio/<chapter-id>/<step+1>.mp3
-  // (1-indexed file names match what `extract-narrations.ts` outputs.)
+  // Audio path follows the convention: /audio/<chapter-id>/<step+1>.ogg
+  // (Tiffy TTS bundle ships ogg; framework default of .mp3 swapped here so
+  // the hidden <audio> element can play the supplied files directly.)
   // Empty narration → no audio src, Auto mode falls back to estimate.
   const audioSrc =
     mode === "manual" || stepText === ""
       ? null
-      : `${import.meta.env.BASE_URL}audio/${ch.id}/${stepper.cursor.step + 1}.mp3`;
+      : `${import.meta.env.BASE_URL}audio/${ch.id}/${stepper.cursor.step + 1}.ogg`;
 
   const onAutoAdvance = useCallback(() => stepper.next(), [stepper]);
 
