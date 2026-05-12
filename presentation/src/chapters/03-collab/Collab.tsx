@@ -230,55 +230,47 @@ function MindMap({ step }: { step: number }) {
   );
 }
 
-/* Case-manager bridge: routes 腫瘤科 (top-left) + 腦神經外科 (top) +
-   放射腫瘤部 (right) through a labelled hub above the ring, then the
-   hub draws back down to the center 腦瘤 node — visualising that the
-   case manager integrates the 3 specialties into a single brain-tumour
-   care pathway. */
+/* Case-manager hub — sits exactly where the 腦瘤 center node is
+   (which fades in step 2), visualising that the case manager IS the
+   integrating core for 腫瘤科 + 腦神經外科 + 放射腫瘤部 →
+   single brain-tumour care pathway. */
 function CaseManagerCallout() {
   const on = nodePos(225);          // 腫瘤科  top-left
   const ns = nodePos(-90);          // 腦神經外科 top
   const rt = nodePos(0);            // 放射腫瘤部 right
-  // Hub: above the ring, vertically aligned with center for the
-  // hub→center "back to centre" connector.
-  const hub = { x: CX, y: 40 };
-  const labelAt = { x: CX, y: 18 };
+  // Hub: exactly where the 腦瘤 center node sits.
+  const hub = { x: CX, y: CY };
 
   return (
     <g className="cb-cm">
-      {/* 3 incoming curves from the highlighted specialties to the hub */}
+      {/* 3 incoming curves from highlighted specialties to the central hub.
+          Each curve approaches with a gentle bend so the three feeds are
+          visually distinct rather than overlapping straight lines. */}
       <path
-        d={`M ${on.x} ${on.y} Q ${(on.x + hub.x) / 2 - 30} ${(on.y + hub.y) / 2 - 40} ${hub.x - 8} ${hub.y + 6}`}
+        d={`M ${on.x} ${on.y} Q ${(on.x + hub.x) / 2 - 20} ${(on.y + hub.y) / 2 + 30} ${hub.x} ${hub.y}`}
         className="cb-cm__path"
       />
       <path
-        d={`M ${ns.x} ${ns.y} L ${hub.x} ${hub.y + 6}`}
+        d={`M ${ns.x} ${ns.y} Q ${hub.x + 30} ${(ns.y + hub.y) / 2} ${hub.x} ${hub.y}`}
         className="cb-cm__path"
       />
       <path
-        d={`M ${rt.x} ${rt.y} Q ${(rt.x + hub.x) / 2 + 30} ${(rt.y + hub.y) / 2 - 40} ${hub.x + 8} ${hub.y + 6}`}
+        d={`M ${rt.x} ${rt.y} Q ${(rt.x + hub.x) / 2} ${(rt.y + hub.y) / 2 + 30} ${hub.x} ${hub.y}`}
         className="cb-cm__path"
       />
-      {/* hub → centre: case manager routes the converged streams back to 腦瘤 */}
-      <line
-        x1={hub.x}
-        y1={hub.y + 14}
-        x2={CX}
-        y2={CY}
-        className="cb-cm__return"
-      />
-      <circle cx={hub.x} cy={hub.y + 8} r="6" className="cb-cm__dot" />
+      {/* hub: replaces the faded 腦瘤 circle with a case-manager badge */}
+      <circle cx={hub.x} cy={hub.y} r={R_CENTER - 6} className="cb-cm__hub-bg" />
       <text
-        x={labelAt.x}
-        y={labelAt.y}
+        x={hub.x}
+        y={hub.y - 8}
         textAnchor="middle"
         className="cb-cm__lbl"
       >
         個管師
       </text>
       <text
-        x={labelAt.x}
-        y={labelAt.y - 18}
+        x={hub.x}
+        y={hub.y + 22}
         textAnchor="middle"
         className="cb-cm__sub"
       >

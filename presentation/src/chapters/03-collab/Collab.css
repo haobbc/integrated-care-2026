@@ -145,30 +145,25 @@
 .cb-cm__path {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 5;
+  stroke-width: 1.8;
+  stroke-dasharray: 5 5;
   opacity: 0.85;
 }
-.cb-cm__return {
-  stroke: var(--accent);
-  stroke-width: 2;
-  stroke-dasharray: 6 4;
-  opacity: 0.65;
-}
-.cb-cm__dot {
+.cb-cm__hub-bg {
   fill: var(--accent);
 }
 .cb-cm__lbl {
   font-family: var(--font-display-cn);
-  font-size: 22px;
-  font-weight: 600;
-  fill: var(--accent);
-  letter-spacing: 0.04em;
+  font-size: 26px;
+  font-weight: 700;
+  fill: var(--surface);
+  letter-spacing: 0.06em;
 }
 .cb-cm__sub {
   font-family: var(--font-mono);
   font-size: 11px;
-  fill: var(--text-mute);
+  fill: var(--surface);
+  opacity: 0.85;
   letter-spacing: 0.2em;
 }
 
