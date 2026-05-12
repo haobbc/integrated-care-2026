@@ -1,0 +1,22 @@
+# node
+node_modules/
+npm-debug.log*
+
+# build output
+presentation/dist/
+presentation/.vite/
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~
+
+# logs / cache
+*.log
+.cache/
+
+# raw extraction artifacts
+extracted/
+source.pptx

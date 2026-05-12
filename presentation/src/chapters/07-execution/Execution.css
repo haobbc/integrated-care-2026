@@ -1,0 +1,284 @@
+/* Chapter 7 · execution — 5-row × 3-col comparison table.
+   Theme: monochrome-print (ink-blue accent on off-white). */
+
+.ex-scene {
+  position: absolute;
+  inset: 0;
+  padding: 80px 110px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+@keyframes exFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes exRowLight {
+  from { background: transparent; }
+  to   { background: var(--accent-soft); }
+}
+@keyframes exGapPop {
+  from { opacity: 0; transform: translateY(calc(-50% + 8px)) scale(0.92); }
+  to   { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+@keyframes exBarGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── Head ─────────────────────────────────────────────────────────── */
+.ex-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: exFadeUp 700ms var(--ease-quart, ease-out) both;
+}
+.ex-eyebrow {
+  font-family: var(--font-display-cn);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  padding-left: 16px;
+  border-left: 5px solid var(--accent);
+  line-height: 1.2;
+}
+.ex-subtitle {
+  font-family: var(--font-display-cn);
+  font-size: 34px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+}
+.ex-period {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+  margin-left: 6px;
+}
+
+/* ── Step 1 hero overlay (years) ──────────────────────────────────── */
+.ex-hero {
+  position: absolute;
+  top: 280px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 36px 64px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  box-shadow: var(--card-shadow);
+  animation: exFadeUp 600ms var(--ease-quart, ease-out) both;
+}
+.ex-hero__years {
+  display: flex;
+  align-items: baseline;
+  gap: 26px;
+}
+.ex-hero__num {
+  font-size: 120px;
+  color: var(--accent);
+  line-height: 1;
+}
+.ex-hero__dash {
+  font-family: var(--font-display-en);
+  font-size: 72px;
+  color: var(--text-faint);
+  font-style: italic;
+}
+.ex-hero__caption {
+  font-family: var(--font-display-cn);
+  font-size: 32px;
+  color: var(--text);
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+/* ── Table ────────────────────────────────────────────────────────── */
+.ex-table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  transition: opacity 500ms var(--ease-quart, ease-out);
+}
+.ex-table--background { opacity: 0.18; }
+
+.ex-table__head {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr 1fr;
+  gap: 0;
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--text);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ex-th { padding: 0 22px; }
+.ex-th--us, .ex-th--them { text-align: left; }
+
+.ex-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.45fr 1fr 1fr;
+  align-items: center;
+  gap: 0;
+  padding: 18px 8px;
+  border-bottom: 1px solid var(--rule);
+  transition:
+    background 500ms var(--ease-quart, ease-out),
+    opacity 500ms var(--ease-quart, ease-out);
+}
+.ex-row:last-child { border-bottom: none; }
+.ex-row--dim    { opacity: 0.34; }
+.ex-row--active {
+  background: var(--accent-soft);
+  animation: exRowLight 500ms var(--ease-quart, ease-out) both;
+}
+.ex-row--active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+}
+
+.ex-cell { padding: 0 22px; }
+
+.ex-cell--label {
+  font-family: var(--font-display-cn);
+  font-size: 21px;
+  color: var(--text);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+}
+.ex-row--active .ex-cell--label {
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ── Stat + bar (us / them cells) ─────────────────────────────────── */
+.ex-cell--us,
+.ex-cell--them {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ex-bar {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.ex-bar__fill {
+  height: 100%;
+  transform-origin: left center;
+  animation: exBarGrow 900ms var(--ease-quart, ease-out) both;
+}
+.ex-bar__fill--us   { background: var(--accent); }
+.ex-bar__fill--them { background: var(--text-faint); }
+.ex-row--active .ex-bar__fill--them {
+  background: var(--text-mute);
+}
+
+.ex-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-display-en);
+  color: var(--text);
+}
+.ex-stat__pct {
+  font-size: 44px;
+  color: var(--accent);
+  line-height: 1;
+  transition: font-size 400ms var(--ease-quart, ease-out);
+}
+.ex-cell--them .ex-stat__pct {
+  color: var(--text-mute);
+}
+.ex-row--active .ex-cell--them .ex-stat__pct {
+  color: var(--text-2);
+}
+.ex-stat__unit {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 24px;
+  color: inherit;
+  opacity: 0.7;
+}
+.ex-stat__n {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+  margin-left: 14px;
+  font-feature-settings: "tnum";
+}
+
+.ex-row--active .ex-stat__pct {
+  font-size: 56px;
+}
+
+/* ── Gap callout on active row ────────────────────────────────────── */
+.ex-gap {
+  position: absolute;
+  right: -98px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--accent);
+  color: var(--surface-2);
+  animation: exGapPop 500ms var(--ease-quart, ease-out) both;
+  min-width: 84px;
+}
+.ex-gap__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.ex-gap__num {
+  font-size: 34px;
+  color: var(--surface-2);
+  line-height: 1;
+}
+.ex-gap__unit {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+/* ── Citation ─────────────────────────────────────────────────────── */
+.ex-cite {
+  position: absolute;
+  right: 110px;
+  bottom: 38px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+  font-feature-settings: "tnum";
+}

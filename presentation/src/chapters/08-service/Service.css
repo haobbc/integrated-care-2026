@@ -1,0 +1,494 @@
+/* Chapter 8 · service — service volume trend + GBM survival comparison */
+
+.sv-scene {
+  position: absolute;
+  inset: 0;
+  padding: 60px 90px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sv-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+.sv-folio {
+  position: absolute;
+  top: 60px;
+  right: 90px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.22em;
+}
+
+@keyframes svFadeIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes svDrawLine {
+  from {
+    stroke-dashoffset: 1600;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes svGrowBar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ── head ── */
+.sv-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: svFadeIn 700ms ease-out both;
+}
+
+.sv-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.sv-title {
+  font-family: var(--font-display-cn);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: 0.005em;
+  padding-left: 14px;
+  border-left: 4px solid var(--accent);
+}
+
+.sv-title__hint {
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+/* ── grid: 1.1fr / 0.9fr ── */
+.sv-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 36px;
+  min-height: 0;
+}
+
+.sv-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  transition: opacity 600ms var(--ease-quart, ease-out),
+    border-color 600ms ease-out;
+}
+
+.sv-panel--on {
+  opacity: 1;
+  border-color: var(--accent);
+}
+
+.sv-panel--dim {
+  opacity: 0.42;
+  border-color: var(--rule);
+}
+
+.sv-panel__head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.sv-panel__tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  padding: 2px 8px;
+  border: 1px solid var(--accent);
+}
+
+.sv-panel__title {
+  font-family: var(--font-display-cn);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.sv-panel__sub {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-mute);
+  letter-spacing: 0.02em;
+}
+
+/* ── chart frame ── */
+.sv-chart {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.sv-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* common axis / grid / tick */
+.sv-grid {
+  stroke: var(--rule);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.55;
+}
+
+.sv-grid-faint {
+  stroke: var(--rule);
+  stroke-width: 1;
+  opacity: 0.3;
+}
+
+.sv-axis {
+  stroke: var(--text);
+  stroke-width: 1;
+}
+
+.sv-tick {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+.sv-axis-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text-mute);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── volume line chart ── */
+.sv-vol__line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 0;
+  animation: svDrawLine 2200ms ease-out both;
+}
+
+.sv-vol__area {
+  fill: var(--accent-soft);
+  stroke: none;
+  opacity: 0.85;
+}
+
+.sv-vol__poly {
+  fill: none;
+  stroke: none;
+}
+
+.sv-vol__pt {
+  fill: var(--surface-2);
+  stroke: var(--accent);
+  stroke-width: 1.6;
+}
+
+.sv-vol__pt--end {
+  fill: var(--accent);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.sv-vol__endnum {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 28px;
+  fill: var(--accent);
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+}
+
+.sv-vol__endcap {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--text-mute);
+  letter-spacing: 0.18em;
+}
+
+.sv-vol__leader {
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.sv-vol__endlabel {
+  animation: svFadeIn 600ms ease-out 1600ms both;
+}
+
+/* ── 13.6% callout overlay ── */
+.sv-callout {
+  position: absolute;
+  right: 32px;
+  top: 90px;
+  padding: 16px 22px;
+  background: var(--surface-2);
+  border: 1px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  z-index: 2;
+}
+
+.sv-callout--on {
+  opacity: 1;
+  transform: translateY(0);
+  animation: svFadeIn 700ms ease-out both;
+}
+
+.sv-callout--off {
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+}
+
+.sv-callout__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--text-mute);
+}
+
+.sv-callout__num {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--accent);
+}
+
+.sv-callout__num .hero-num {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.sv-callout__unit {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.sv-callout__sub {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+/* ── survival chart ── */
+.sv-surv__rowlabel {
+  font-family: var(--font-display-cn);
+  font-size: 18px;
+  fill: var(--text-2);
+  letter-spacing: 0.02em;
+}
+
+.sv-surv__rowlabel--em {
+  fill: var(--accent);
+  font-weight: 600;
+}
+
+.sv-surv__bar {
+  transition: width 800ms var(--ease-quart, ease-out);
+}
+
+.sv-surv__bar--mute {
+  fill: var(--text-faint);
+  opacity: 0.55;
+}
+
+.sv-surv__bar--accent {
+  fill: var(--accent);
+  transform-origin: left center;
+  animation: svGrowBar 1100ms ease-out both;
+}
+
+.sv-surv__cap {
+  stroke: var(--text-mute);
+  stroke-width: 1.4;
+}
+
+.sv-surv__arrow {
+  fill: var(--accent);
+  animation: svFadeIn 500ms ease-out 1100ms both;
+}
+
+.sv-surv__barlabel {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 18px;
+  fill: var(--text-2);
+  font-feature-settings: "tnum";
+}
+
+.sv-surv__barlabel--em {
+  fill: var(--accent);
+  font-weight: 600;
+  font-size: 20px;
+  font-family: var(--font-display-cn);
+  font-style: normal;
+}
+
+.sv-surv__row--ours .sv-surv__bar--accent {
+  opacity: 0;
+}
+
+.sv-surv__row--on .sv-surv__bar--accent {
+  opacity: 1;
+}
+
+.sv-surv__cutoff {
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 4;
+  opacity: 0.65;
+  animation: svFadeIn 500ms ease-out both;
+}
+
+.sv-surv__cutoff-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--accent);
+  letter-spacing: 0.16em;
+  animation: svFadeIn 500ms ease-out 200ms both;
+}
+
+/* legend at bottom of survival panel */
+.sv-surv__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--surface-3);
+  border-left: 3px solid var(--accent);
+  transition: opacity 500ms ease-out;
+}
+
+.sv-surv__legend--on {
+  opacity: 1;
+  animation: svFadeIn 600ms ease-out both;
+}
+
+.sv-surv__legend--off {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sv-surv__legend-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-display-cn);
+  font-size: 16px;
+  color: var(--text-2);
+}
+
+.sv-surv__legend-row--em {
+  font-size: 18px;
+  color: var(--text);
+}
+
+.sv-surv__swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  transform: translateY(2px);
+}
+
+.sv-surv__swatch--mute {
+  background: var(--text-faint);
+  opacity: 0.6;
+}
+
+.sv-surv__swatch--accent {
+  background: var(--accent);
+}
+
+.sv-surv__legend-name {
+  min-width: 80px;
+}
+
+.sv-surv__legend-val {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--text);
+}
+
+.sv-surv__legend-val .hero-num {
+  font-size: 22px;
+  color: var(--text);
+}
+
+.sv-surv__legend-val--em {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sv-surv__legend-unit {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-mute);
+}
+
+/* ── citation bottom-right ── */
+.sv-cite {
+  position: absolute;
+  right: 90px;
+  bottom: 28px;
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  border-top: 1px solid var(--rule);
+  padding-top: 4px;
+}

@@ -1,0 +1,265 @@
+/* Chapter 11 · positioning — 4-dimension × 4-column native grid table.
+   Theme: monochrome-print (ink-blue accent on off-white).
+   Per-step: row light-up + crown emphasis + hero number callouts. */
+
+.ps-scene {
+  position: absolute;
+  inset: 0;
+  padding: 70px 100px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+@keyframes psFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes psRowLight {
+  from { background: transparent; }
+  to   { background: var(--accent-soft); }
+}
+@keyframes psCrownPop {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.6) rotate(-6deg); }
+  60%  { opacity: 1; transform: translateY(0)   scale(1.12) rotate(2deg); }
+  100% { opacity: 1; transform: translateY(0)   scale(1) rotate(0deg); }
+}
+@keyframes psNumRise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Head ─────────────────────────────────────────────────────────── */
+.ps-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: psFadeUp 700ms var(--ease-quart, ease-out) both;
+}
+.ps-eyebrow {
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  padding-left: 14px;
+  border-left: 5px solid var(--accent);
+  line-height: 1.2;
+}
+.ps-subtitle {
+  font-family: var(--font-display-cn);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+  letter-spacing: 0.01em;
+}
+.ps-subtitle__sub {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-mute);
+  letter-spacing: 0.14em;
+}
+
+/* ── Table ────────────────────────────────────────────────────────── */
+.ps-table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+}
+
+/* Header row */
+.ps-table__head {
+  display: grid;
+  grid-template-columns: 0.55fr 1.35fr 1fr 1fr 1fr;
+  gap: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--text);
+}
+.ps-th {
+  padding: 0 18px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.45;
+}
+.ps-th--dim {
+  text-align: center;
+  letter-spacing: 0.22em;
+}
+.ps-th--us {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Data row */
+.ps-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.55fr 1.35fr 1fr 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+  transition:
+    background 500ms var(--ease-quart, ease-out),
+    opacity 500ms var(--ease-quart, ease-out);
+  min-height: 132px;
+}
+.ps-row:last-child { border-bottom: none; }
+.ps-row--dim    { opacity: 0.32; }
+.ps-row--active {
+  background: var(--accent-soft);
+  animation: psRowLight 500ms var(--ease-quart, ease-out) both;
+}
+.ps-row--active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+}
+
+/* Cell base */
+.ps-cell {
+  position: relative;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 1px solid var(--rule);
+  font-family: var(--font-display-cn);
+  font-size: 19px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+.ps-cell:first-child { border-left: none; }
+
+/* Dimension cell (column 1) */
+.ps-cell--dim {
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.ps-dim__label {
+  font-family: var(--font-display-cn);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.12em;
+  writing-mode: horizontal-tb;
+}
+.ps-row--active .ps-dim__label {
+  color: var(--accent);
+}
+
+/* Us cell (column 2) — leading column with hero number */
+.ps-cell--us {
+  background: var(--surface-2);
+  border-left: 2px solid var(--accent);
+  border-right: 1px solid var(--rule);
+}
+.ps-cell--us .ps-cell__text {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Cell text / sub */
+.ps-cell__text {
+  font-size: 19px;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.ps-cell__sub {
+  font-family: var(--font-display-cn);
+  font-size: 15px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* Hero number block inside cell */
+.ps-cell--hero .ps-cell__num {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 2px;
+  animation: psNumRise 600ms var(--ease-quart, ease-out) both;
+}
+.ps-num {
+  font-size: 42px;
+  color: var(--accent);
+  line-height: 1;
+}
+.ps-num__unit {
+  font-family: var(--font-display-cn);
+  font-size: 16px;
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* Bigger hero when row is active */
+.ps-row--active .ps-cell--hero .ps-num {
+  font-size: 56px;
+}
+.ps-row--active .ps-cell--hero .ps-num__unit {
+  font-size: 18px;
+  color: var(--text-2);
+}
+
+/* Crown badge */
+.ps-crown {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  color: var(--text-mute);
+  opacity: 0.55;
+  transition: color 500ms var(--ease-quart, ease-out),
+              opacity 500ms var(--ease-quart, ease-out),
+              transform 500ms var(--ease-quart, ease-out);
+}
+.ps-crown svg {
+  display: block;
+}
+.ps-crown--active {
+  color: var(--accent);
+  opacity: 1;
+  transform: scale(1.18);
+  animation: psCrownPop 700ms var(--ease-quart, ease-out) both;
+}
+
+/* ── Foot caption + cite ──────────────────────────────────────────── */
+.ps-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+  gap: 24px;
+}
+.ps-foot__caption {
+  font-family: var(--font-display-cn);
+  font-size: 20px;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  animation: psFadeUp 500ms var(--ease-quart, ease-out) both;
+}
+.ps-foot__cite {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  font-feature-settings: "tnum";
+}

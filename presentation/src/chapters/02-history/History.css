@@ -1,0 +1,282 @@
+/* Chapter 2 · history — twenty-year team history (slide 3 rebuilt).
+   Prefix .hs- · all colors / fonts via tokens. */
+
+.hs-scene {
+  position: absolute;
+  inset: 0;
+  padding: 64px 96px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  animation: hsFadeIn 700ms ease-out both;
+}
+
+.hs-mono { font-family: var(--font-mono); letter-spacing: 0.18em; }
+
+@keyframes hsFadeIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to   { transform: none;              opacity: 1; }
+}
+
+/* folio top-right */
+.hs-folio {
+  position: absolute;
+  top: 64px;
+  right: 96px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.22em;
+}
+
+/* ── head ── */
+.hs-head {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+.hs-eyebrow {
+  font-family: var(--font-display-cn);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--accent);
+  padding-left: 14px;
+  border-left: 6px solid var(--accent);
+  line-height: 1;
+}
+.hs-eyebrow-sub {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-mute);
+}
+.hs-eyebrow-sep { color: var(--text-faint); }
+
+/* ── body grid: 1.2fr timeline · 1fr photo ── */
+.hs-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* ─── LEFT: timeline ───────────────────────────────── */
+.hs-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+/* hero anchor: 20040318 */
+.hs-anchor { display: flex; flex-direction: column; gap: 6px; }
+.hs-anchor__label {
+  font-size: 13px;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+}
+.hs-anchor__date {
+  font-size: 132px;
+  color: var(--accent);
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  animation: hsAnchorIn 900ms cubic-bezier(0.2, 0.65, 0.2, 1) both;
+}
+@keyframes hsAnchorIn {
+  from { letter-spacing: 0.04em; opacity: 0; }
+  to   { letter-spacing: -0.025em; opacity: 1; }
+}
+.hs-anchor__rule {
+  margin-top: 10px;
+  max-width: 460px;
+  transform-origin: left center;
+  animation: hsRuleGrow 800ms cubic-bezier(0.2, 0.65, 0.2, 1) 300ms both;
+}
+@keyframes hsRuleGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* decade panels */
+.hs-decades {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+.hs-decade {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 26px 22px 22px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--rule);
+  transition:
+    border-left-color 600ms var(--ease-quart, cubic-bezier(0.2, 0.65, 0.2, 1)),
+    background       600ms var(--ease-quart, cubic-bezier(0.2, 0.65, 0.2, 1)),
+    opacity          600ms var(--ease-quart, cubic-bezier(0.2, 0.65, 0.2, 1)),
+    filter           600ms var(--ease-quart, cubic-bezier(0.2, 0.65, 0.2, 1));
+}
+.hs-decade--pending {
+  opacity: 0.32;
+  filter: grayscale(1);
+}
+.hs-decade--active {
+  opacity: 1;
+  filter: none;
+  border-left-color: var(--accent);
+  background: var(--surface-2);
+}
+.hs-decade--past {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+  border-left-color: var(--text-faint);
+}
+
+/* left mark inside a panel */
+.hs-decade__mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-right: 22px;
+  border-right: 1px solid var(--rule);
+  min-height: 92px;
+  justify-content: center;
+}
+.hs-decade__order {
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.32em;
+}
+.hs-decade__num {
+  font-size: 92px;
+  color: var(--accent);
+  line-height: 0.9;
+  margin-top: 2px;
+}
+.hs-decade__unit {
+  font-family: var(--font-display-cn);
+  font-size: 18px;
+  color: var(--text-2);
+  margin-top: -6px;
+  letter-spacing: 0.04em;
+}
+
+/* right body inside a panel */
+.hs-decade__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.hs-decade__kicker {
+  font-family: var(--font-display-cn);
+  font-size: 16px;
+  color: var(--text-mute);
+  letter-spacing: 0.3em;
+}
+.hs-decade__title {
+  font-family: var(--font-display-cn);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  margin: 0;
+}
+.hs-decade__accent {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+}
+.hs-decade__sub {
+  font-family: var(--font-display-cn);
+  font-size: 22px;
+  color: var(--text-2);
+  margin: 4px 0 0;
+  letter-spacing: 0.02em;
+}
+.hs-decade__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* chip badge */
+.hs-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* connector between decade panels */
+.hs-link {
+  position: relative;
+  height: 22px;
+  margin-left: 84px;
+  display: flex;
+  align-items: center;
+}
+.hs-link::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  background: var(--rule);
+  margin-left: 0;
+}
+.hs-link__tick {
+  position: absolute;
+  left: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  border-radius: 50%;
+}
+
+/* ─── RIGHT: stone-team photo ───────────────────────── */
+.hs-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+.hs-photo__frame {
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  padding: 12px;
+  box-shadow: var(--card-shadow);
+}
+.hs-photo__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.92);
+}
+.hs-photo__cap {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.22em;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+}
+.hs-photo__sep { color: var(--text-faint); }

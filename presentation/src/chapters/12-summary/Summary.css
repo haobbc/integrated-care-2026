@@ -1,0 +1,546 @@
+/* Chapter 12 · summary — 總結 + 國際肯定 + SNQ 銅獎
+   Theme: monochrome-print (ink-blue accent on off-white).
+
+   Bronze hex exception (explicitly documented):
+     --sm-bronze        : #a06b2e   — SNQ medal warm tone
+     --sm-bronze-soft   : rgba(160, 107, 46, 0.10)
+     --sm-bronze-glow   : rgba(160, 107, 46, 0.30)
+   All other surfaces / type / rules use base tokens. The bronze is
+   ONLY applied to the SNQ ribbon + medal label on the award step. */
+
+:root {
+  --sm-bronze:        #a06b2e;
+  --sm-bronze-soft:   rgba(160, 107, 46, 0.10);
+  --sm-bronze-glow:   rgba(160, 107, 46, 0.30);
+}
+
+.sm-scene {
+  position: absolute;
+  inset: 0;
+  padding: 80px 120px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+@keyframes smFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes smFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes smRuleGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes smBadgePop {
+  from { opacity: 0; transform: translateY(6px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes smRibbonIn {
+  from { opacity: 0; transform: translateY(-10px); letter-spacing: 0.4em; }
+  to   { opacity: 1; transform: none;              letter-spacing: 0.22em; }
+}
+@keyframes smPhotoIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ─── Step 0 · 總結 title ───────────────────────────────────────── */
+.sm-scene--title {
+  justify-content: center;
+  align-items: center;
+  padding: 120px 140px;
+}
+.sm-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: smFadeUp 900ms var(--ease-quart, ease-out) both;
+}
+.sm-title__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.28em;
+}
+.sm-title__hero {
+  font-family: var(--font-display-cn);
+  font-size: 240px;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.08em;
+  margin: 8px 0 0;
+}
+.sm-title__rule {
+  width: 380px;
+  margin: 24px 0 10px;
+  transform-origin: center;
+  animation: smRuleGrow 900ms 200ms var(--ease-quart, ease-out) both;
+}
+.sm-title__sub {
+  font-family: var(--font-display-cn);
+  font-size: 36px;
+  color: var(--text-2);
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+.sm-title__sub-em {
+  color: var(--accent);
+  font-weight: 500;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 4px;
+}
+
+/* ─── Steps 1-4 · body ─────────────────────────────────────────── */
+.sm-scene--body { gap: 28px; }
+
+.sm-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: smFadeUp 700ms var(--ease-quart, ease-out) both;
+}
+.sm-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-mute);
+  letter-spacing: 0.22em;
+}
+.sm-headline {
+  font-family: var(--font-display-cn);
+  font-size: 56px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  padding-left: 18px;
+  border-left: 6px solid var(--accent);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.sm-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 60px;
+}
+
+/* ── Left column: bullets + tier compare ────────────────────────── */
+.sm-col--left {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sm-bullet {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 16px;
+  padding: 18px 22px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--rule);
+  transition:
+    opacity 500ms var(--ease-quart, ease-out),
+    border-color 500ms var(--ease-quart, ease-out),
+    background 500ms var(--ease-quart, ease-out);
+}
+.sm-bullet--dim {
+  opacity: 0.32;
+  border-left-color: var(--text-faint);
+}
+.sm-bullet--active {
+  opacity: 1;
+  border-left-color: var(--accent);
+  background: var(--surface-2);
+  animation: smFadeUp 600ms var(--ease-quart, ease-out) both;
+}
+.sm-bullet__mark {
+  font-family: var(--font-display-en);
+  font-size: 22px;
+  color: var(--accent);
+  line-height: 1.4;
+}
+.sm-bullet__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sm-bullet__lead {
+  font-family: var(--font-display-cn);
+  font-size: 26px;
+  color: var(--text);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+.sm-bullet__row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.sm-bullet__sub {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+}
+
+/* badges (accent fill) */
+.sm-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  background: var(--accent);
+  color: var(--surface-2);
+  animation: smBadgePop 600ms var(--ease-quart, ease-out) both;
+}
+.sm-badge--asia {}
+.sm-badge--global {}
+
+/* triad row */
+.sm-triad {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 6px;
+}
+.sm-triad__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  animation: smFadeUp 600ms var(--ease-quart, ease-out) both;
+}
+.sm-triad__num {
+  font-size: 32px;
+  color: var(--accent);
+  line-height: 1;
+}
+.sm-triad__label {
+  font-family: var(--font-display-cn);
+  font-size: 18px;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.sm-triad__plus {
+  align-self: center;
+  font-family: var(--font-display-en);
+  font-size: 28px;
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+/* tier compare row (step 3) */
+.sm-tiers {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 10px;
+  padding: 18px 22px;
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  animation: smFadeUp 700ms var(--ease-quart, ease-out) both;
+  flex-wrap: wrap;
+}
+.sm-tier {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.sm-tier__verb {
+  font-family: var(--font-display-cn);
+  font-size: 18px;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+}
+.sm-tier__obj {
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+.sm-tier__sep {
+  font-family: var(--font-display-en);
+  font-size: 22px;
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+/* ── Right column: statement + dim photo placeholder ────────────── */
+.sm-col--right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sm-statement {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 42px 42px 36px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  box-shadow: var(--card-shadow);
+  transition:
+    opacity 600ms var(--ease-quart, ease-out),
+    transform 600ms var(--ease-quart, ease-out);
+}
+.sm-statement--prominent {
+  opacity: 1;
+  transform: none;
+}
+.sm-statement--recede {
+  opacity: 0.55;
+  transform: scale(0.97);
+}
+.sm-statement__quote {
+  position: absolute;
+  top: 12px;
+  left: 28px;
+  font-family: var(--font-display-cn);
+  font-size: 96px;
+  line-height: 1;
+  color: var(--accent-soft);
+  color: var(--accent);
+  opacity: 0.18;
+}
+.sm-statement__title {
+  font-family: var(--font-display-cn);
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  margin-top: 24px;
+}
+.sm-statement__em {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 54px;
+  letter-spacing: 0.03em;
+}
+.sm-statement__rule {
+  width: 160px;
+  margin: 14px 0 6px;
+}
+.sm-statement__caption {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+}
+.sm-statement__inst {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+
+/* dim photo placeholder under the statement (steps 1-4) */
+.sm-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--surface-3);
+  border: 1px solid var(--rule);
+}
+.sm-photo--dim .sm-photo__img {
+  filter: grayscale(0.7) brightness(0.85);
+  opacity: 0.4;
+}
+.sm-photo__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sm-photo__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 20, 24, 0.0) 0%,
+    rgba(14, 20, 24, 0.35) 100%
+  );
+  pointer-events: none;
+}
+.sm-photo__hint {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--surface-2);
+  letter-spacing: 0.18em;
+  opacity: 0.85;
+}
+
+/* ─── Step 5 · SNQ 銅獎 reveal ──────────────────────────────────── */
+.sm-scene--award {
+  padding: 80px 120px 80px;
+  justify-content: center;
+}
+
+.sm-award {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 64px;
+  align-items: center;
+  animation: smFadeUp 800ms var(--ease-quart, ease-out) both;
+}
+
+.sm-award__photo {
+  position: relative;
+  padding: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  box-shadow: var(--card-shadow);
+  animation: smPhotoIn 900ms var(--ease-quart, ease-out) both;
+}
+.sm-award__photo::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--sm-bronze-glow);
+  pointer-events: none;
+}
+.sm-award__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* right column panel */
+.sm-award__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.sm-award__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-mute);
+  letter-spacing: 0.22em;
+  animation: smFadeIn 600ms 200ms var(--ease-quart, ease-out) both;
+}
+
+/* bronze ribbon — the SNQ medal accent (bronze hex exception applied here only) */
+.sm-ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px 14px 36px;
+  background: var(--surface-2);
+  border: 2px solid var(--sm-bronze);
+  position: relative;
+  box-shadow:
+    0 1px 0 var(--sm-bronze-glow),
+    0 14px 40px var(--sm-bronze-soft);
+  animation: smRibbonIn 800ms 350ms var(--ease-quart, ease-out) both;
+}
+.sm-ribbon::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  bottom: -2px;
+  width: 10px;
+  background: var(--sm-bronze);
+}
+.sm-ribbon__pin {
+  width: 10px;
+  height: 10px;
+  background: var(--sm-bronze);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--sm-bronze-soft);
+}
+.sm-ribbon__label {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--sm-bronze);
+  letter-spacing: 0.14em;
+}
+.sm-ribbon__divider {
+  font-family: var(--font-display-en);
+  font-size: 22px;
+  color: var(--text-faint);
+}
+.sm-ribbon__medal {
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--sm-bronze);
+  letter-spacing: 0.2em;
+}
+
+.sm-award__title {
+  font-family: var(--font-display-cn);
+  font-size: 76px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  margin: 6px 0 0;
+  animation: smFadeUp 700ms 500ms var(--ease-quart, ease-out) both;
+}
+.sm-award__title-em {
+  color: var(--sm-bronze);
+  border-bottom: 3px solid var(--sm-bronze);
+  padding-bottom: 6px;
+}
+
+.sm-award__rule {
+  width: 220px;
+  margin: 16px 0 10px;
+  transform-origin: left center;
+  animation: smRuleGrow 900ms 700ms var(--ease-quart, ease-out) both;
+}
+
+.sm-award__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: smFadeIn 700ms 850ms var(--ease-quart, ease-out) both;
+}
+.sm-award__meta-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 18px;
+  align-items: baseline;
+}
+.sm-award__meta-key {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.sm-award__meta-val {
+  font-family: var(--font-display-cn);
+  font-size: 20px;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}

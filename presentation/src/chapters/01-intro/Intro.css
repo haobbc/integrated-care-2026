@@ -1,0 +1,234 @@
+/* Chapter 1 · intro — title cover + disease background */
+
+.in-scene {
+  position: absolute;
+  inset: 0;
+  padding: 70px 90px;
+  display: flex;
+  flex-direction: column;
+}
+.in-mono   { font-family: var(--font-mono); letter-spacing: 0.05em; }
+
+/* folio */
+.in-folio {
+  position: absolute;
+  top: 70px;
+  right: 90px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.22em;
+}
+
+@keyframes inFadeIn {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: none;              opacity: 1; }
+}
+
+/* ── Step 0 cover ── */
+
+.in-scene--cover {
+  justify-content: center;
+  align-items: flex-start;
+  padding: 140px 130px;
+}
+.in-cover {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 1500px;
+  animation: inFadeIn 900ms ease-out both;
+}
+.in-cover__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.24em;
+}
+.in-cover__title {
+  font-family: var(--font-display-cn);
+  font-size: 96px;
+  line-height: 1.15;
+  color: var(--text);
+  font-weight: 600;
+  margin: 8px 0 0;
+  letter-spacing: -0.005em;
+}
+.in-cover__sub {
+  font-family: var(--font-display-cn);
+  font-size: 40px;
+  color: var(--text-2);
+  margin-top: 14px;
+}
+.in-cover__sub-strong {
+  color: var(--accent);
+  font-weight: 500;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 6px;
+}
+.in-cover__rule {
+  width: 420px;
+  margin: 32px 0 16px;
+}
+.in-cover__byline {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  color: var(--text-2);
+}
+.in-cover__group { color: var(--accent); font-weight: 500; }
+.in-cover__sep   { color: var(--text-faint); }
+.in-cover__author { color: var(--text); font-weight: 500; }
+.in-cover__inst {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-mute);
+  letter-spacing: 0.06em;
+}
+
+/* ── Steps 1-6 background ── */
+
+.in-scene--bg {
+  padding: 56px 90px;
+  gap: 24px;
+}
+.in-bg {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+  animation: inFadeIn 700ms ease-out both;
+}
+.in-bg__head {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+.in-bg__eyebrow {
+  font-family: var(--font-display-cn);
+  font-size: 36px;
+  color: var(--accent);
+  font-weight: 600;
+  padding-left: 14px;
+  border-left: 6px solid var(--accent);
+}
+.in-bg__transition {
+  font-family: var(--font-display-cn);
+  font-size: 26px;
+  color: var(--text-mute);
+  font-style: italic;
+  animation: inFadeIn 500ms ease-out both;
+}
+
+.in-bg__body {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 50px;
+  flex: 1;
+}
+
+/* bullets — left column */
+.in-bg__col-text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.in-bg__bullet {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--rule);
+  transition: all 500ms var(--ease-quart);
+}
+.in-bg__bullet--dim {
+  opacity: 0.4;
+  border-left-color: var(--text-faint);
+}
+.in-bg__bullet--active {
+  opacity: 1;
+  border-left-color: var(--accent);
+  background: var(--surface-2);
+}
+.in-bg__bullet-mark {
+  font-size: 18px;
+  color: var(--accent);
+  line-height: 1.6;
+}
+.in-bg__bullet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.in-bg__bullet-row {
+  font-family: var(--font-display-cn);
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+.in-bg__bullet-row--em { font-size: 26px; font-weight: 500; }
+.in-bg__bullet-row--sub { font-size: 18px; color: var(--text-2); padding-left: 14px; }
+.in-bg__num {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  font-feature-settings: "tnum";
+  padding: 0 4px;
+}
+.in-bg__num--em { font-size: 1.35em; }
+.in-bg__em {
+  color: var(--accent);
+  font-weight: 500;
+}
+.in-bg__chip {
+  display: inline-block;
+  padding: 3px 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  margin: 0 4px;
+  letter-spacing: 0.08em;
+}
+
+/* right column — paper figures */
+.in-bg__col-fig {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+}
+.in-bg__fig-frame {
+  padding: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+}
+.in-bg__fig-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.in-cite {
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+  font-feature-settings: "tnum";
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+}
+
+.in-bg__foot {
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  text-align: right;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+}

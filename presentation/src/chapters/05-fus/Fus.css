@@ -1,0 +1,372 @@
+/* Chapter 5 · fus — 特色進展 2 · 聚焦超音波 */
+
+.fs-scene {
+  position: absolute;
+  inset: 0;
+  padding: 64px 96px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.fs-mono { font-family: var(--font-mono); letter-spacing: 0.08em; }
+
+@keyframes fsFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fsDrawLine {
+  from { stroke-dashoffset: 60; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes fsAxis {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* ── chip ── */
+.fs-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  align-self: flex-start;
+  padding: 8px 18px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+}
+.fs-chip__mark { font-weight: 600; }
+.fs-chip__sep  { color: var(--text-faint); }
+.fs-chip__name { font-family: var(--font-display-cn); letter-spacing: 0.12em; }
+
+/* ── hero ── */
+.fs-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fsFadeUp 750ms ease-out both;
+}
+.fs-hero--full {
+  margin-top: 60px;
+  gap: 40px;
+}
+.fs-hero--compact {
+  gap: 6px;
+}
+.fs-hero__title {
+  font-family: var(--font-display-cn);
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+}
+.fs-hero--full .fs-hero__title  { font-size: 92px; }
+.fs-hero--compact .fs-hero__title { font-size: 44px; }
+.fs-hero__amp {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+.fs-hero__sub {
+  font-family: var(--font-display-cn);
+  font-size: 32px;
+  color: var(--text-2);
+  margin-top: 8px;
+}
+.fs-hero__sub-sep { color: var(--text-faint); }
+.fs-hero__pillars {
+  display: flex;
+  gap: 18px;
+  margin-top: 30px;
+}
+.fs-hero__pill {
+  width: 92px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display-cn);
+  font-size: 46px;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  background: var(--surface-2);
+  letter-spacing: 0;
+}
+
+/* ── section label ── */
+.fs-section-label {
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  padding-left: 14px;
+  border-left: 5px solid var(--accent);
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+.fs-section-label__span {
+  font-size: 16px;
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  font-weight: 400;
+}
+
+/* ── stage common ── */
+.fs-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 1;
+  animation: fsFadeUp 650ms ease-out both;
+}
+.fs-stage__foot {
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  border-top: 1px solid var(--rule);
+  padding-top: 8px;
+  text-align: right;
+}
+
+/* ── Step 1 · chain ── */
+.fs-stage--chain { justify-content: flex-start; }
+.fs-chain {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.fs-chain__row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+.fs-node {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  padding: 20px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  min-height: 140px;
+  animation: fsFadeUp 600ms ease-out both;
+}
+.fs-node:nth-child(1) { animation-delay: 50ms; }
+.fs-node:nth-child(2) { animation-delay: 150ms; }
+.fs-node:nth-child(3) { animation-delay: 250ms; }
+.fs-node:nth-child(4) { animation-delay: 350ms; }
+.fs-node:nth-child(5) { animation-delay: 450ms; }
+.fs-node__tag {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display-cn);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+}
+.fs-node__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fs-node__title {
+  font-family: var(--font-display-cn);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.fs-node__sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+.fs-node__note {
+  font-family: var(--font-display-cn);
+  font-size: 14px;
+  color: var(--text-2);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+}
+
+.fs-arrow {
+  width: 60px;
+  height: 24px;
+  color: var(--accent);
+  flex: none;
+}
+.fs-arrow line,
+.fs-arrow polyline {
+  stroke-dasharray: 60;
+  animation: fsDrawLine 700ms ease-out both;
+}
+.fs-chain__row:nth-child(1) .fs-arrow line { animation-delay: 150ms; }
+.fs-chain__row:nth-child(2) .fs-arrow line { animation-delay: 250ms; }
+.fs-chain__row:nth-child(3) .fs-arrow line { animation-delay: 350ms; }
+.fs-chain__row:nth-child(4) .fs-arrow line { animation-delay: 450ms; }
+
+/* ── Step 2 · 2x2 grid ── */
+.fs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 22px;
+  flex: 1;
+}
+.fs-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px 32px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  animation: fsFadeUp 600ms ease-out both;
+}
+.fs-card:nth-child(1) { animation-delay: 60ms; }
+.fs-card:nth-child(2) { animation-delay: 160ms; }
+.fs-card:nth-child(3) { animation-delay: 260ms; }
+.fs-card:nth-child(4) { animation-delay: 360ms; }
+.fs-card__idx {
+  font-size: 14px;
+  color: var(--text-faint);
+  letter-spacing: 0.2em;
+}
+.fs-card__title {
+  font-family: var(--font-display-cn);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.fs-card__en {
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+}
+.fs-card__rule {
+  margin: 10px 0 6px;
+  width: 64px;
+}
+.fs-card__brief {
+  font-family: var(--font-display-cn);
+  font-size: 18px;
+  color: var(--text-2);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+/* ── Step 3 · timeline ── */
+.fs-stage--timeline { gap: 26px; }
+.fs-timeline {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  flex: 1;
+  padding: 30px 0 10px;
+}
+.fs-timeline__axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 88px;
+  height: 1.5px;
+  background: var(--accent);
+  transform-origin: left center;
+  animation: fsFadeUp 600ms ease-out both;
+}
+.fs-event {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: fsFadeUp 700ms ease-out both;
+}
+.fs-event:nth-child(2) { animation-delay: 80ms; }
+.fs-event:nth-child(3) { animation-delay: 200ms; }
+.fs-event:nth-child(4) { animation-delay: 320ms; }
+.fs-event:nth-child(5) { animation-delay: 440ms; }
+
+.fs-event__year {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-weight: 500;
+  font-feature-settings: "tnum";
+  font-size: 56px;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.fs-event--em .fs-event__year { color: var(--accent); }
+.fs-event__dot {
+  width: 14px;
+  height: 14px;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  margin: 12px 0 0;
+  z-index: 1;
+}
+.fs-event--em .fs-event__dot { background: var(--accent); }
+
+.fs-event__card {
+  margin-top: 24px;
+  width: 100%;
+  padding: 18px 18px 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 220px;
+}
+.fs-event--em .fs-event__card {
+  border-top-width: 5px;
+  box-shadow: 0 1px 0 var(--rule), 0 12px 32px var(--accent-glow);
+}
+.fs-event__phase {
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+.fs-event__title {
+  font-family: var(--font-display-cn);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+.fs-event__nct {
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.14em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+  margin-top: 2px;
+}
+.fs-event__body {
+  font-family: var(--font-display-cn);
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-top: 4px;
+}
