@@ -33,46 +33,88 @@ type Row = {
   highlightStep: number;
 };
 
+/* All rows verified against the original pptx slide 12 table. */
 const ROWS: Row[] = [
   {
     id: "volume",
     dim: "量",
     us: {
-      text: "本院年腦瘤手術量",
+      text: "本院每年腦瘤手術病例數",
       num: ">120",
       unit: "例 / 年",
-      sub: "急救清醒手術",
+      sub: "為全國最多",
     },
-    national: { text: "冠絕全國", crown: true },
-    asia: { text: "多於日本", sub: "東京大學醫院" },
-    west: { text: "多於 Gui de Chauliac", sub: "美國中心" },
+    national: { text: "冠於全國", crown: true },
+    asia: {
+      text: "多於日本東京大學醫院",
+      sub: "與韓國首爾大學醫院",
+    },
+    west: {
+      text: "多於美國麻州總醫院",
+      sub: "與法國 Gui de Chauliac 醫院",
+    },
     highlightStep: 1,
   },
   {
     id: "quality",
     dim: "質",
     us: {
-      text: "手術切除率",
-      num: ">95",
-      unit: "%",
-      sub: "4 年 80% 神經保留",
+      lines: [
+        { topic: "手術切除率", value: ">95 %" },
+        { topic: "第四期平均存活", value: "逾 24 個月" },
+        { topic: "一年功能保留", value: "80 %" },
+      ],
     },
-    national: { text: "未有大型統計" },
-    asia: { text: "比北京大學醫院、台大醫院" },
-    west: { text: "比 Gui de Chauliac" },
+    national: {
+      crown: true,
+      lines: [
+        { topic: "切除率", value: "冠於全國" },
+        { topic: "存活", value: "未有大型數據" },
+        { topic: "保留率", value: "未有相關研究" },
+      ],
+    },
+    asia: {
+      lines: [
+        { topic: "切除率", value: "優於日本東京大學醫院" },
+        { topic: "與", value: "韓國首爾大學醫院" },
+      ],
+    },
+    west: {
+      lines: [
+        { topic: "切除率", value: "比美國麻州總醫院" },
+        { topic: "與", value: "法國 Gui de Chauliac 醫院" },
+      ],
+    },
     highlightStep: 2,
   },
   {
     id: "innovation",
     dim: "創新性",
     us: {
-      text: "聚焦超音波 phase II",
-      sub: "清醒手術門診 + 全國唯一",
-      crown: true,
+      lines: [
+        { topic: "清醒開顱", value: "兼具腫瘤切除與功能保留之平衡" },
+        { topic: "聚焦超音波", value: "世界首例手術導航導引型臨床試驗" },
+      ],
     },
-    national: { text: "本院唯一具備", sub: "awake clinic + FUS 試驗" },
-    asia: { text: "韓國 MRgFUS", sub: "日本臨床試驗" },
-    west: { text: "Gui de Chauliac · Stanford", sub: "臨床試驗", crown: true },
+    national: {
+      crown: true,
+      lines: [
+        { topic: "清醒開顱", value: "團隊與量均為國內 First" },
+        { topic: "聚焦超音波", value: "與臨床試驗為國內 First" },
+      ],
+    },
+    asia: {
+      lines: [
+        { topic: "清醒開顱", value: "日韓規模均小" },
+        { topic: "聚焦超音波", value: "日韓 MRgFUS 尚未進入腦瘤試驗" },
+      ],
+    },
+    west: {
+      lines: [
+        { topic: "清醒開顱", value: "優於美國麻州總醫院" },
+        { topic: "聚焦超音波", value: "美法均無腦瘤臨床試驗" },
+      ],
+    },
     highlightStep: 3,
   },
   {
