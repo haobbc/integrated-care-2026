@@ -136,11 +136,12 @@ function MindMap({ step }: { step: number }) {
   // Which spokes should glow per step.
   // step 0: all dim (overview)
   // step 1: all spokes glow (weekly cross-specialty)
-  // step 2: highlight 解剖病理部 (pa) + 影像診療部 (rad) + add 個管師 callout
+  // step 2: highlight 腫瘤科 (on) + 腦神經外科 (ns) + 放射腫瘤部 (rt) + 個管師 hub
+  //         which routes back to the center (case-manager bridges the 3 to 腦瘤)
   // step 3: all spokes glow softly (continuing online)
   const litIds: Set<string> =
     step === 1 ? new Set(SPECS.map((s) => s.id))
-    : step === 2 ? new Set(["pa", "rad"])
+    : step === 2 ? new Set(["on", "ns", "rt"])
     : step === 3 ? new Set(SPECS.map((s) => s.id))
     : new Set();
 
@@ -215,8 +216,11 @@ function MindMap({ step }: { step: number }) {
         );
       })}
 
-      {/* center node */}
-      <g className="cb-center" transform={`translate(${CX} ${CY})`}>
+      {/* center node — fades in step 2 so the case-manager bridge is the focal */}
+      <g
+        className={`cb-center ${step === 2 ? "cb-center--faded" : ""}`}
+        transform={`translate(${CX} ${CY})`}
+      >
         <circle r={R_CENTER} className="cb-center__bg" />
         <text className="cb-center__lbl" textAnchor="middle" dy="0.36em">
           腦瘤
@@ -226,26 +230,44 @@ function MindMap({ step }: { step: number }) {
   );
 }
 
-/* Case-manager callout: dashed bracket linking 解剖病理部 (left) and
-   影像診療部 (bottom-left), with a label "個管師" placed outside the ring. */
+/* Case-manager bridge: routes 腫瘤科 (top-left) + 腦神經外科 (top) +
+   放射腫瘤部 (right) through a labelled hub above the ring, then the
+   hub draws back down to the center 腦瘤 node — visualising that the
+   case manager integrates the 3 specialties into a single brain-tumour
+   care pathway. */
 function CaseManagerCallout() {
-  const pa = nodePos(180);          // 解剖病理部
-  const rad = nodePos(135);         // 影像診療部
-  // Hub anchor — out beyond the ring on the lower-left.
-  const hub = { x: 70, y: 470 };
-  const labelAt = { x: 70, y: 510 };
+  const on = nodePos(225);          // 腫瘤科  top-left
+  const ns = nodePos(-90);          // 腦神經外科 top
+  const rt = nodePos(0);            // 放射腫瘤部 right
+  // Hub: above the ring, vertically aligned with center for the
+  // hub→center "back to centre" connector.
+  const hub = { x: CX, y: 40 };
+  const labelAt = { x: CX, y: 18 };
 
   return (
     <g className="cb-cm">
+      {/* 3 incoming curves from the highlighted specialties to the hub */}
       <path
-        d={`M ${pa.x} ${pa.y} Q ${hub.x - 20} ${hub.y - 80} ${hub.x} ${hub.y}`}
+        d={`M ${on.x} ${on.y} Q ${(on.x + hub.x) / 2 - 30} ${(on.y + hub.y) / 2 - 40} ${hub.x - 8} ${hub.y + 6}`}
         className="cb-cm__path"
       />
       <path
-        d={`M ${rad.x} ${rad.y} Q ${hub.x + 10} ${hub.y - 40} ${hub.x} ${hub.y}`}
+        d={`M ${ns.x} ${ns.y} L ${hub.x} ${hub.y + 6}`}
         className="cb-cm__path"
       />
-      <circle cx={hub.x} cy={hub.y} r="6" className="cb-cm__dot" />
+      <path
+        d={`M ${rt.x} ${rt.y} Q ${(rt.x + hub.x) / 2 + 30} ${(rt.y + hub.y) / 2 - 40} ${hub.x + 8} ${hub.y + 6}`}
+        className="cb-cm__path"
+      />
+      {/* hub → centre: case manager routes the converged streams back to 腦瘤 */}
+      <line
+        x1={hub.x}
+        y1={hub.y + 14}
+        x2={CX}
+        y2={CY}
+        className="cb-cm__return"
+      />
+      <circle cx={hub.x} cy={hub.y + 8} r="6" className="cb-cm__dot" />
       <text
         x={labelAt.x}
         y={labelAt.y}
@@ -256,7 +278,7 @@ function CaseManagerCallout() {
       </text>
       <text
         x={labelAt.x}
-        y={labelAt.y + 26}
+        y={labelAt.y - 18}
         textAnchor="middle"
         className="cb-cm__sub"
       >

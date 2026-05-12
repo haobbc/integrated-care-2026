@@ -121,6 +121,12 @@
 .cb-node--lit .cb-node__lbl  { fill: var(--accent); font-weight: 600; }
 
 /* center node */
+.cb-center {
+  transition: opacity 500ms var(--ease-quart, ease-out);
+}
+.cb-center--faded {
+  opacity: 0.22;
+}
 .cb-center__bg {
   fill: var(--accent);
 }
@@ -141,7 +147,13 @@
   stroke: var(--accent);
   stroke-width: 1.5;
   stroke-dasharray: 4 5;
-  opacity: 0.75;
+  opacity: 0.85;
+}
+.cb-cm__return {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+  opacity: 0.65;
 }
 .cb-cm__dot {
   fill: var(--accent);
