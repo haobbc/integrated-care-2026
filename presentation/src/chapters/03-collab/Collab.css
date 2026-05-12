@@ -142,15 +142,21 @@
 .cb-cm {
   animation: cbFadeIn 500ms ease-out both;
 }
-.cb-cm__path {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1.8;
-  stroke-dasharray: 5 5;
-  opacity: 0.85;
-}
 .cb-cm__hub-bg {
   fill: var(--accent);
+}
+.cb-cm__hub-halo {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.5;
+  animation: cbHaloPulse 2.4s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+@keyframes cbHaloPulse {
+  from { opacity: 0.35; }
+  to   { opacity: 0.75; }
 }
 .cb-cm__lbl {
   font-family: var(--font-display-cn);

@@ -136,12 +136,12 @@ function MindMap({ step }: { step: number }) {
   // Which spokes should glow per step.
   // step 0: all dim (overview)
   // step 1: all spokes glow (weekly cross-specialty)
-  // step 2: highlight 腫瘤科 (on) + 腦神經外科 (ns) + 放射腫瘤部 (rt) + 個管師 hub
-  //         which routes back to the center (case-manager bridges the 3 to 腦瘤)
+  // step 2: case-manager as the soul of the team — all 8 specialties feed
+  //         into the central 個管師 hub
   // step 3: all spokes glow softly (continuing online)
   const litIds: Set<string> =
     step === 1 ? new Set(SPECS.map((s) => s.id))
-    : step === 2 ? new Set(["on", "ns", "rt"])
+    : step === 2 ? new Set(SPECS.map((s) => s.id))
     : step === 3 ? new Set(SPECS.map((s) => s.id))
     : new Set();
 
@@ -230,50 +230,19 @@ function MindMap({ step }: { step: number }) {
   );
 }
 
-/* Case-manager hub — sits exactly where the 腦瘤 center node is
-   (which fades in step 2), visualising that the case manager IS the
-   integrating core for 腫瘤科 + 腦神經外科 + 放射腫瘤部 →
-   single brain-tumour care pathway. */
+/* Case-manager hub — replaces the faded 腦瘤 center node in step 2.
+   All 8 specialty spokes (drawn elsewhere) already converge on the
+   center, so the hub itself is just the labelled badge that visualises
+   the case manager as the soul of the team. */
 function CaseManagerCallout() {
-  const on = nodePos(225);          // 腫瘤科  top-left
-  const ns = nodePos(-90);          // 腦神經外科 top
-  const rt = nodePos(0);            // 放射腫瘤部 right
-  // Hub: exactly where the 腦瘤 center node sits.
-  const hub = { x: CX, y: CY };
-
   return (
     <g className="cb-cm">
-      {/* 3 incoming curves from highlighted specialties to the central hub.
-          Each curve approaches with a gentle bend so the three feeds are
-          visually distinct rather than overlapping straight lines. */}
-      <path
-        d={`M ${on.x} ${on.y} Q ${(on.x + hub.x) / 2 - 20} ${(on.y + hub.y) / 2 + 30} ${hub.x} ${hub.y}`}
-        className="cb-cm__path"
-      />
-      <path
-        d={`M ${ns.x} ${ns.y} Q ${hub.x + 30} ${(ns.y + hub.y) / 2} ${hub.x} ${hub.y}`}
-        className="cb-cm__path"
-      />
-      <path
-        d={`M ${rt.x} ${rt.y} Q ${(rt.x + hub.x) / 2} ${(rt.y + hub.y) / 2 + 30} ${hub.x} ${hub.y}`}
-        className="cb-cm__path"
-      />
-      {/* hub: replaces the faded 腦瘤 circle with a case-manager badge */}
-      <circle cx={hub.x} cy={hub.y} r={R_CENTER - 6} className="cb-cm__hub-bg" />
-      <text
-        x={hub.x}
-        y={hub.y - 8}
-        textAnchor="middle"
-        className="cb-cm__lbl"
-      >
+      <circle cx={CX} cy={CY} r={R_CENTER - 6} className="cb-cm__hub-bg" />
+      <circle cx={CX} cy={CY} r={R_CENTER + 6} className="cb-cm__hub-halo" />
+      <text x={CX} y={CY - 8} textAnchor="middle" className="cb-cm__lbl">
         個管師
       </text>
-      <text
-        x={hub.x}
-        y={hub.y + 22}
-        textAnchor="middle"
-        className="cb-cm__sub"
-      >
+      <text x={CX} y={CY + 22} textAnchor="middle" className="cb-cm__sub">
         Case Manager
       </text>
     </g>
