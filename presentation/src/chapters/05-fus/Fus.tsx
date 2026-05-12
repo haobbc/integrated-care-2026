@@ -2,22 +2,21 @@ import type { ChapterStepProps } from "../../registry/types";
 import "./Fus.css";
 
 /* Chapter 5 — 特色進展 2 · 聚焦超音波臨床試驗團隊 (slide 6).
-   4 steps:
-     0 — hero (chip + title)
-     1 — 學研醫創產 5-actor chain
-     2 — 4-quadrant application grid
-     3 — NaviFUS clinical-trial timeline 2014 → 2025
+   3 steps (intro hero removed per spec):
+     0 — 學研醫創產 5-actor chain
+     1 — 4-quadrant application grid
+     2 — NaviFUS clinical-trial timeline 2014 → 2025
 */
 
 export default function Fus({ step }: ChapterStepProps) {
   return (
     <div className="fs-scene">
       <Chip />
-      <Hero step={step} />
+      <Hero />
 
-      {step === 1 && <ChainScene />}
-      {step === 2 && <GridScene />}
-      {step === 3 && <TimelineScene />}
+      {step === 0 && <ChainScene />}
+      {step === 1 && <GridScene />}
+      {step === 2 && <TimelineScene />}
     </div>
   );
 }
@@ -33,27 +32,13 @@ function Chip() {
   );
 }
 
-/* ── hero title ── */
-function Hero({ step }: { step: number }) {
+/* ── hero title (always compact — first beat is now the chain) ── */
+function Hero() {
   return (
-    <header className={`fs-hero ${step === 0 ? "fs-hero--full" : "fs-hero--compact"}`}>
+    <header className="fs-hero fs-hero--compact">
       <h1 className="fs-hero__title">
         聚焦超音波<span className="fs-hero__amp">　·　</span>臨床試驗團隊
       </h1>
-      {step === 0 && (
-        <div className="fs-hero__sub">
-          學研醫創產<span className="fs-hero__sub-sep">　全面整合　</span>四大臨床應用
-        </div>
-      )}
-      {step === 0 && (
-        <div className="fs-hero__pillars">
-          <span className="fs-hero__pill">學</span>
-          <span className="fs-hero__pill">研</span>
-          <span className="fs-hero__pill">醫</span>
-          <span className="fs-hero__pill">創</span>
-          <span className="fs-hero__pill">產</span>
-        </div>
-      )}
     </header>
   );
 }
