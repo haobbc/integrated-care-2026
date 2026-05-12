@@ -26,7 +26,7 @@ const TABLE: TrialRow[] = [
   { year: "2025", agent: "NaviFUS · BBB",  sponsor: "林口長庚 · 多中心",  phase: "Phase III",       cardId: 1 },
   { year: "2022", agent: "NBM ADI",        sponsor: "NBM · 跨國協作",     phase: "Pre-clinical",    cardId: 2 },
   { year: "2024", agent: "NBM ADI",        sponsor: "NBM · 跨國多中心",   phase: "Phase II",        cardId: 2 },
-  { year: "2025", agent: "MRgFUS 合作",     sponsor: "韓國指標醫學中心",   phase: "Joint program",   cardId: 3 },
+  { year: "2025", agent: "NBM 合作",        sponsor: "韓國指標醫學中心",   phase: "Joint program",   cardId: 3 },
 ];
 
 export default function Trials({ step }: ChapterStepProps) {
