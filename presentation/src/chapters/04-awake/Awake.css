@@ -403,46 +403,41 @@
   color: var(--text);
 }
 
-/* ────────── surgery room photo · fits whatever vertical space remains
-              below the 2017 timeline on step 3, fades out on step 4+ ────────── */
+/* ────────── surgery room photo · large fill on the 2017 timeline beat,
+              fades out on subsequent steps ────────── */
 .aw-strip {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   gap: 8px;
-  min-height: 0;
   transition:
-    opacity 600ms var(--ease-quart),
-    transform 600ms var(--ease-quart),
-    flex-grow 600ms var(--ease-quart);
+    opacity 700ms var(--ease-quart),
+    transform 700ms var(--ease-quart),
+    max-height 700ms var(--ease-quart);
   overflow: hidden;
 }
 .aw-strip--off {
   opacity: 0;
   transform: translateY(14px);
-  flex: 0 0 0;
+  max-height: 0;
   pointer-events: none;
 }
 .aw-strip--on {
   opacity: 1;
   transform: none;
-  flex: 1 1 auto;
-  min-height: 0;
+  max-height: 700px;
 }
 .aw-strip--out {
   opacity: 0;
   transform: none;
-  flex: 0 0 0;
+  max-height: 0;
   pointer-events: none;
 }
 .aw-strip__img {
   display: block;
   width: 100%;
-  height: 100%;
-  min-height: 0;
-  flex: 1 1 auto;
+  height: auto;
+  max-height: 620px;
   object-fit: contain;
-  object-position: center;
   border: 1px solid var(--rule);
   background: var(--surface-2);
   filter: grayscale(0.12) contrast(1.03);
