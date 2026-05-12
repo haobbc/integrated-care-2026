@@ -424,7 +424,7 @@
 .aw-strip--on {
   opacity: 1;
   transform: none;
-  max-height: 700px;
+  max-height: 360px;
 }
 .aw-strip--out {
   opacity: 0;
@@ -435,9 +435,9 @@
 .aw-strip__img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 620px;
-  object-fit: contain;
+  height: 320px;
+  object-fit: cover;
+  object-position: center 40%;
   border: 1px solid var(--rule);
   background: var(--surface-2);
   filter: grayscale(0.12) contrast(1.03);
