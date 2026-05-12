@@ -223,7 +223,6 @@ function MindMap({ step }: { step: number }) {
       {/* center node */}
       <g className="cb-center" transform={`translate(${CX} ${CY})`}>
         <circle r={R_CENTER} className="cb-center__bg" />
-        <circle r={R_CENTER} className="cb-center__ring" />
         <text className="cb-center__lbl" textAnchor="middle" dy="0.36em">
           腦瘤
         </text>

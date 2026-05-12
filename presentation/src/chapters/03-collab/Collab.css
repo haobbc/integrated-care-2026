@@ -124,14 +124,6 @@
 .cb-center__bg {
   fill: var(--accent);
 }
-.cb-center__ring {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
-  opacity: 0.35;
-  transform-origin: center;
-  transform: scale(1.18);
-}
 .cb-center__lbl {
   font-family: var(--font-display-cn);
   font-size: 38px;
