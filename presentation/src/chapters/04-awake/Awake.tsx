@@ -142,10 +142,14 @@ export default function Awake({ step }: ChapterStepProps) {
         </section>
       </div>
 
-      {/* ── surgery room photo as ambient bottom strip (visible from step 2) ── */}
+      {/* ── surgery room photo: large fill on step 2 (the 2017 timeline beat),
+              fades out on step 3+ ── */}
       <div
-        className={`aw-strip ${step >= 2 ? "aw-strip--on" : "aw-strip--off"}`}
-        aria-hidden={step < 2}
+        className={
+          "aw-strip " +
+          (step === 2 ? "aw-strip--on" : step >= 3 ? "aw-strip--out" : "aw-strip--off")
+        }
+        aria-hidden={step !== 2}
       >
         <img
           src={import.meta.env.BASE_URL + "assets/surgery-room-slide5.png"}

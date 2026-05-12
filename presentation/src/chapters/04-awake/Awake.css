@@ -403,15 +403,16 @@
   color: var(--text);
 }
 
-/* ────────── surgery room photo · bottom ambient strip ────────── */
+/* ────────── surgery room photo · large fill on the 2017 timeline beat,
+              fades out on subsequent steps ────────── */
 .aw-strip {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   transition:
-    opacity 800ms var(--ease-quart),
-    transform 800ms var(--ease-quart),
-    max-height 800ms var(--ease-quart);
+    opacity 700ms var(--ease-quart),
+    transform 700ms var(--ease-quart),
+    max-height 700ms var(--ease-quart);
   overflow: hidden;
 }
 .aw-strip--off {
@@ -423,16 +424,23 @@
 .aw-strip--on {
   opacity: 1;
   transform: none;
-  max-height: 220px;
+  max-height: 700px;
+}
+.aw-strip--out {
+  opacity: 0;
+  transform: none;
+  max-height: 0;
+  pointer-events: none;
 }
 .aw-strip__img {
   display: block;
   width: 100%;
-  height: 140px;
-  object-fit: cover;
-  object-position: center 35%;
+  height: auto;
+  max-height: 620px;
+  object-fit: contain;
   border: 1px solid var(--rule);
-  filter: grayscale(0.18) contrast(1.02);
+  background: var(--surface-2);
+  filter: grayscale(0.12) contrast(1.03);
 }
 .aw-strip__caption {
   display: flex;
