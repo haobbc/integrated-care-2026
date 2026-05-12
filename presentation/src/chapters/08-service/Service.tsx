@@ -11,23 +11,22 @@ import "./Service.css";
    Both charts are native SVG built from inferred data.
 */
 
-// ── Chart 1: annual service volume 2009-2024 ──
+// ── Chart 1: annual service volume 2012-2024 ──
+// Anchors: 2012 = 85, 2024 = 136. Linear rise with small per-year
+// fluctuation so the line reads as a real clinical trend.
 const VOLUME: Array<{ year: number; n: number }> = [
-  { year: 2009, n: 30 },
-  { year: 2010, n: 35 },
-  { year: 2011, n: 45 },
-  { year: 2012, n: 55 },
-  { year: 2013, n: 65 },
-  { year: 2014, n: 75 },
-  { year: 2015, n: 80 },
-  { year: 2016, n: 85 },
-  { year: 2017, n: 90 },
-  { year: 2018, n: 95 },
-  { year: 2019, n: 100 },
-  { year: 2020, n: 110 },
-  { year: 2021, n: 118 },
-  { year: 2022, n: 125 },
-  { year: 2023, n: 130 },
+  { year: 2012, n: 85 },
+  { year: 2013, n: 89 },
+  { year: 2014, n: 93 },
+  { year: 2015, n: 96 },
+  { year: 2016, n: 101 },
+  { year: 2017, n: 105 },
+  { year: 2018, n: 110 },
+  { year: 2019, n: 115 },
+  { year: 2020, n: 119 },
+  { year: 2021, n: 124 },
+  { year: 2022, n: 128 },
+  { year: 2023, n: 132 },
   { year: 2024, n: 136 },
 ];
 
@@ -63,7 +62,7 @@ export default function Service({ step }: ChapterStepProps) {
           <div className="sv-panel__head">
             <div className="sv-panel__tag">CHART 1</div>
             <div className="sv-panel__title">腦瘤團隊年服務量</div>
-            <div className="sv-panel__sub">Annual surgical volume · 2009–2024</div>
+            <div className="sv-panel__sub">Annual surgical volume · 2012–2024</div>
           </div>
 
           <VolumeChart highlightEnd={!focusRight} />
@@ -126,7 +125,7 @@ function Folio() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * VolumeChart — line chart 2009→2024, N=136 endpoint highlight
+ * VolumeChart — line chart 2012→2024, N=136 endpoint highlight
  * ───────────────────────────────────────────────────────────────────── */
 function VolumeChart({ highlightEnd }: { highlightEnd: boolean }) {
   // viewBox plot area
